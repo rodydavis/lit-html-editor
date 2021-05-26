@@ -618,7 +618,7 @@ limitations under the License.
       background-color: var(--editor-background);
     }
     #toolbar {
-      width: 1090px;
+      width: 1120px;
       height: var(--editor-toolbar-height);
     }
     [contenteditable] {
