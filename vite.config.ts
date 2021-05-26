@@ -1,14 +1,17 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
+import { resolve } from "path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: '/lit-rich-text-editor/',
   build: {
     lib: {
-      entry: 'src/lit-html-editor.ts',
-      formats: ['es']
+      entry: "src/rich-text-editor.ts",
+      formats: ["es"],
     },
     rollupOptions: {
-      external: /^lit-element/
-    }
-  }
-})
+      input: {
+        main: resolve(__dirname, "index.html"),
+      },
+    },
+  },
+});
