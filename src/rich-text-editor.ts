@@ -35,6 +35,11 @@ export class RichTextEditor extends LitElement {
       color: var(--editor-toolbar-on-background);
       overscroll-behavior: contain;
       overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    #editor-actions::-webkit-scrollbar {
+      display: none;
     }
     #editor {
       width: var(--editor-width);
