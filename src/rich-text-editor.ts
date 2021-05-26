@@ -81,9 +81,11 @@ export class RichTextEditor extends LitElement {
 
   render() {
     return html`<main>
+      <input id="bg" type="color" hidden />
+      <input id="fg" type="color" hidden />
       <div id="editor-actions">
         <div id="toolbar">
-          ${toolbar(this.getSelection(), (command, val) => {
+          ${toolbar(this.shadowRoot!, this.getSelection(), (command, val) => {
             document.execCommand(command, false, val);
             console.log("command", command, val);
           })}
@@ -118,6 +120,7 @@ export class RichTextEditor extends LitElement {
 }
 
 function toolbar(
+  shadowRoot: ShadowRoot,
   selection: Selection | null,
   command: (c: string, val: string | undefined) => void
 ) {
@@ -141,7 +144,6 @@ function toolbar(
     icon: string;
     command: string | (() => void);
     active?: boolean;
-
     type?: string;
     values?: { value: string; name: string; font?: boolean }[];
     command_value?: string;
@@ -215,8 +217,7 @@ function toolbar(
     {
       icon: "format_color_text",
       command: () => {
-        const input = document.createElement("input");
-        input.type = "color";
+        const input = shadowRoot.querySelector("#fg")! as HTMLInputElement;
         input.addEventListener(
           "input",
           (e: any) => {
@@ -232,8 +233,7 @@ function toolbar(
     {
       icon: "border_color",
       command: () => {
-        const input = document.createElement("input");
-        input.type = "color";
+        const input = shadowRoot.querySelector("#bg")! as HTMLInputElement;
         input.addEventListener(
           "input",
           (e: any) => {
