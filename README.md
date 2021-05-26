@@ -1,4 +1,4 @@
-# Rich Text Editor
+# Lit HTML Editor
 
 Rich text editor built with [Lit](https://lit.dev) based on [this](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Editable_content#example_a_simple_but_complete_rich_text_editor) example.
 
