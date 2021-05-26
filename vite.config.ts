@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 
 export default defineConfig({
-  base: '/lit-rich-text-editor/',
+  base: '/lit-html-editor/',
   build: {
     lib: {
       entry: "src/rich-text-editor.ts",

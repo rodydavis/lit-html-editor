@@ -1,5 +1,5 @@
 {
-  "name": "rich-text-editor",
+  "name": "lit-html-editor",
   "version": "0.0.0",
   "types": "types/my-element.d.ts",
   "scripts": {
