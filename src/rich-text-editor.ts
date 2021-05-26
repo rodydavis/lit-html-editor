@@ -47,7 +47,7 @@ export class RichTextEditor extends LitElement {
       background-color: var(--editor-background);
     }
     #toolbar {
-      width: 1080px;
+      width: 1090px;
       height: var(--editor-toolbar-height);
     }
     [contenteditable] {
@@ -82,11 +82,11 @@ export class RichTextEditor extends LitElement {
 
   render() {
     return html`<main>
-      <input id="bg" type="color" style='display:none' />
-      <input id="fg" type="color" style='display:none' />
+      <input id="bg" type="color" style="display:none" />
+      <input id="fg" type="color" style="display:none" />
       <div id="editor-actions">
         <div id="toolbar">
-          ${toolbar(this.shadowRoot!, this.getSelection(), (command, val) => {
+          ${this.renderToolbar((command, val) => {
             document.execCommand(command, false, val);
             console.log("command", command, val);
           })}
@@ -114,228 +114,227 @@ export class RichTextEditor extends LitElement {
     this.root = root;
   }
 
-  getSelection(): Selection | null {
-    if (this.shadowRoot?.getSelection) return this.shadowRoot?.getSelection();
-    return null;
-  }
-}
-
-function toolbar(
-  shadowRoot: ShadowRoot,
-  selection: Selection | null,
-  command: (c: string, val: string | undefined) => void
-) {
-  const tags: string[] = [];
-  if (selection?.type === "Range") {
-    // @ts-ignore
-    let parentNode = selection?.baseNode;
-    if (parentNode) {
-      const checkNode = () => {
-        const parentTagName = parentNode?.tagName?.toLowerCase()?.trim();
-        if (parentTagName) tags.push(parentTagName);
-      };
-      while (parentNode != null) {
-        checkNode();
-        parentNode = parentNode?.parentNode;
+  renderToolbar(command: (c: string, val: string | undefined) => void) {
+    // TODO: Selection does not work on Safari iOS
+    const selection = this.shadowRoot?.getSelection
+      ? this.shadowRoot!.getSelection()
+      : null;
+    const tags: string[] = [];
+    if (selection?.type === "Range") {
+      // @ts-ignore
+      let parentNode = selection?.baseNode;
+      if (parentNode) {
+        const checkNode = () => {
+          const parentTagName = parentNode?.tagName?.toLowerCase()?.trim();
+          if (parentTagName) tags.push(parentTagName);
+        };
+        while (parentNode != null) {
+          checkNode();
+          parentNode = parentNode?.parentNode;
+        }
       }
     }
-  }
 
-  const commands: {
-    icon: string;
-    command: string | (() => void);
-    active?: boolean;
-    type?: string;
-    values?: { value: string; name: string; font?: boolean }[];
-    command_value?: string;
-  }[] = [
-    {
-      icon: "format_clear",
-      command: "removeFormat",
-    },
+    const commands: {
+      icon: string;
+      command: string | (() => void);
+      active?: boolean;
+      type?: string;
+      values?: { value: string; name: string; font?: boolean }[];
+      command_value?: string;
+    }[] = [
+      {
+        icon: "format_clear",
+        command: "removeFormat",
+      },
 
-    {
-      icon: "format_bold",
-      command: "bold",
-      active: tags.includes("b"),
-    },
-    {
-      icon: "format_italic",
-      command: "italic",
-      active: tags.includes("i"),
-    },
-    {
-      icon: "format_underlined",
-      command: "underline",
-      active: tags.includes("u"),
-    },
-    {
-      icon: "format_align_left",
-      command: "justifyleft",
-    },
-    {
-      icon: "format_align_center",
-      command: "justifycenter",
-    },
-    {
-      icon: "format_align_right",
-      command: "justifyright",
-    },
-    {
-      icon: "format_list_numbered",
-      command: "insertorderedlist",
-      active: tags.includes("ol"),
-    },
-    {
-      icon: "format_list_bulleted",
-      command: "insertunorderedlist",
-      active: tags.includes("ul"),
-    },
-    {
-      icon: "format_quote",
-      command: "formatblock",
-      command_value: "blockquote",
-    },
-    {
-      icon: "format_indent_decrease",
-      command: "outdent",
-    },
-    {
-      icon: "format_indent_increase",
-      command: "indent",
-    },
-    tags.includes("a")
-      ? { icon: "link_off", command: "unlink" }
-      : {
-          icon: "add_link",
-          command: () => {
-            const newLink = prompt("Write the URL here", "http://");
-            if (newLink && newLink != "" && newLink != "http://") {
-              command("createlink", newLink);
-            }
-          },
+      {
+        icon: "format_bold",
+        command: "bold",
+        active: tags.includes("b"),
+      },
+      {
+        icon: "format_italic",
+        command: "italic",
+        active: tags.includes("i"),
+      },
+      {
+        icon: "format_underlined",
+        command: "underline",
+        active: tags.includes("u"),
+      },
+      {
+        icon: "format_align_left",
+        command: "justifyleft",
+      },
+      {
+        icon: "format_align_center",
+        command: "justifycenter",
+      },
+      {
+        icon: "format_align_right",
+        command: "justifyright",
+      },
+      {
+        icon: "format_list_numbered",
+        command: "insertorderedlist",
+        active: tags.includes("ol"),
+      },
+      {
+        icon: "format_list_bulleted",
+        command: "insertunorderedlist",
+        active: tags.includes("ul"),
+      },
+      {
+        icon: "format_quote",
+        command: "formatblock",
+        command_value: "blockquote",
+      },
+      {
+        icon: "format_indent_decrease",
+        command: "outdent",
+      },
+      {
+        icon: "format_indent_increase",
+        command: "indent",
+      },
+
+      {
+        icon: "add_link",
+        command: () => {
+          const newLink = prompt("Write the URL here", "http://");
+          if (newLink && newLink != "" && newLink != "http://") {
+            command("createlink", newLink);
+          }
         },
-    {
-      icon: "format_color_text",
-      command: () => {
-        const input = shadowRoot.querySelector("#fg")! as HTMLInputElement;
-        input.addEventListener("input", (e: any) => {
-          const val = e.target.value;
-          command("forecolor", val);
-        });
-        input.click();
       },
-      type: "color",
-    },
-    {
-      icon: "border_color",
-      command: () => {
-        const input = shadowRoot.querySelector("#bg")! as HTMLInputElement;
-        input.addEventListener("input", (e: any) => {
-          const val = e.target.value;
-          command("backcolor", val);
-        });
-        input.click();
+      { icon: "link_off", command: "unlink" },
+      {
+        icon: "format_color_text",
+        command: () => {
+          const input = this.shadowRoot!.querySelector(
+            "#fg"
+          )! as HTMLInputElement;
+          input.addEventListener("input", (e: any) => {
+            const val = e.target.value;
+            command("forecolor", val);
+          });
+          input.click();
+        },
+        type: "color",
       },
-      type: "color",
-    },
-    {
-      icon: "title",
-      command: "formatblock",
-      values: [
-        { name: "Normal Text", value: "--" },
-        { name: "Heading 1", value: "h1" },
-        { name: "Heading 2", value: "h2" },
-        { name: "Heading 3", value: "h3" },
-        { name: "Heading 4", value: "h4" },
-        { name: "Heading 5", value: "h5" },
-        { name: "Heading 6", value: "h6" },
-        { name: "Paragraph", value: "p" },
-        { name: "Pre-Formatted", value: "pre" },
-      ],
-    },
-    {
-      icon: "text_format",
-      command: "fontname",
-      values: [
-        { name: "Font Name", value: "--" },
-        ...[...checkFonts()].map((f) => ({
-          name: f,
-          value: f,
-          font: true,
-        })),
-      ],
-    },
-    {
-      icon: "format_size",
-      command: "fontsize",
-      values: [
-        { name: "Font Size", value: "--" },
-        { name: "Very Small", value: "1" },
-        { name: "Small", value: "2" },
-        { name: "Normal", value: "3" },
-        { name: "Medium Large", value: "4" },
-        { name: "Large", value: "5" },
-        { name: "Very Large", value: "6" },
-        { name: "Maximum", value: "7" },
-      ],
-    },
-    {
-      icon: "undo",
-      command: "undo",
-    },
-    {
-      icon: "redo",
-      command: "redo",
-    },
-    {
-      icon: "content_cut",
-      command: "cut",
-    },
-    {
-      icon: "content_copy",
-      command: "copy",
-    },
-    {
-      icon: "content_paste",
-      command: "paste",
-    },
-  ];
+      {
+        icon: "border_color",
+        command: () => {
+          const input = this.shadowRoot!.querySelector(
+            "#bg"
+          )! as HTMLInputElement;
+          input.addEventListener("input", (e: any) => {
+            const val = e.target.value;
+            command("backcolor", val);
+          });
+          input.click();
+        },
+        type: "color",
+      },
+      {
+        icon: "title",
+        command: "formatblock",
+        values: [
+          { name: "Normal Text", value: "--" },
+          { name: "Heading 1", value: "h1" },
+          { name: "Heading 2", value: "h2" },
+          { name: "Heading 3", value: "h3" },
+          { name: "Heading 4", value: "h4" },
+          { name: "Heading 5", value: "h5" },
+          { name: "Heading 6", value: "h6" },
+          { name: "Paragraph", value: "p" },
+          { name: "Pre-Formatted", value: "pre" },
+        ],
+      },
+      {
+        icon: "text_format",
+        command: "fontname",
+        values: [
+          { name: "Font Name", value: "--" },
+          ...[...checkFonts()].map((f) => ({
+            name: f,
+            value: f,
+            font: true,
+          })),
+        ],
+      },
+      {
+        icon: "format_size",
+        command: "fontsize",
+        values: [
+          { name: "Font Size", value: "--" },
+          { name: "Very Small", value: "1" },
+          { name: "Small", value: "2" },
+          { name: "Normal", value: "3" },
+          { name: "Medium Large", value: "4" },
+          { name: "Large", value: "5" },
+          { name: "Very Large", value: "6" },
+          { name: "Maximum", value: "7" },
+        ],
+      },
+      {
+        icon: "undo",
+        command: "undo",
+      },
+      {
+        icon: "redo",
+        command: "redo",
+      },
+      {
+        icon: "content_cut",
+        command: "cut",
+      },
+      {
+        icon: "content_copy",
+        command: "copy",
+      },
+      {
+        icon: "content_paste",
+        command: "paste",
+      },
+    ];
 
-  return html`
-    ${commands.map((n) => {
-      const elem = document.createElement("mwc-icon-button");
-      elem.setAttribute("icon", n.icon);
-      elem.className = n.active ? "active" : "inactive";
-      elem.addEventListener("click", () => {
-        if (n.values) {
-        } else if (typeof n.command === "string") {
-          command(n.command, n.command_value);
-        } else {
-          n.command();
-        }
-      });
-      return html`
-        ${n.values
-          ? html` <select
-              id="${n.icon}"
-              @change=${(e: any) => {
-                const val = e.target.value;
-                if (val === "--") {
-                  command("removeFormat", undefined);
-                } else if (typeof n.command === "string") {
-                  command(n.command, val);
-                }
-              }}
-            >
-              ${n.values.map(
-                (v) => html` <option value=${v.value}>${v.name}</option>`
-              )}
-            </select>`
-          : html` ${elem}`}
-      `;
-    })}
-  `;
+    return html`
+      ${commands.map((n) => {
+        return html`
+          ${n.values
+            ? html` <select
+                id="${n.icon}"
+                @change=${(e: any) => {
+                  const val = e.target.value;
+                  if (val === "--") {
+                    command("removeFormat", undefined);
+                  } else if (typeof n.command === "string") {
+                    command(n.command, val);
+                  }
+                }}
+              >
+                ${n.values.map(
+                  (v) => html` <option value=${v.value}>${v.name}</option>`
+                )}
+              </select>`
+            : html` <mwc-icon-button
+                icon="${n.icon}"
+                class="${n.active ? "active" : "inactive"}"
+                @click=${() => {
+                  if (n.values) {
+                  } else if (typeof n.command === "string") {
+                    command(n.command, n.command_value);
+                  } else {
+                    n.command();
+                  }
+                }}
+              ></mwc-icon-button>`}
+        `;
+      })}
+    `;
+  }
 }
 
 export function checkFonts(): string[] {
