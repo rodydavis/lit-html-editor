@@ -557,23 +557,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */;let ft=class extends ht{};ft.styles=mt,ft=ae([(e=>t=>"function"==typeof t?((e,t)=>(window.customElements.define(e,t),t))(e,t):((e,t)=>{const{kind:r,elements:i}=t;return{kind:r,elements:i,finisher(t){window.customElements.define(e,t)}}})(e,t))("mwc-icon-button")],ft);var yt=Object.defineProperty,gt=Object.getOwnPropertyDescriptor,_t=(e,t,r,i)=>{for(var s,a=i>1?void 0:i?gt(t,r):t,o=e.length-1;o>=0;o--)(s=e[o])&&(a=(i?s(t,r,a):s(a))||a);return i&&a&&yt(t,r,a),a};let vt=class extends re{constructor(){super(...arguments),this.content="",this.root=null}render(){return z`<main>
-      <input id="bg" type="color" hidden />
-      <input id="fg" type="color" hidden />
+      <input id="bg" type="color" style='display:none' />
+      <input id="fg" type="color" style='display:none' />
       <div id="editor-actions">
         <div id="toolbar">
-          ${function(e,t,r){const i=[];if("Range"===(null==t?void 0:t.type)){let e=null==t?void 0:t.baseNode;if(e){const t=()=>{var t,r;const s=null==(r=null==(t=null==e?void 0:e.tagName)?void 0:t.toLowerCase())?void 0:r.trim();s&&i.push(s)};for(;null!=e;)t(),e=null==e?void 0:e.parentNode}}const s=[{icon:"format_clear",command:"removeFormat"},{icon:"format_bold",command:"bold",active:i.includes("b")},{icon:"format_italic",command:"italic",active:i.includes("i")},{icon:"format_underlined",command:"underline",active:i.includes("u")},{icon:"format_align_left",command:"justifyleft"},{icon:"format_align_center",command:"justifycenter"},{icon:"format_align_right",command:"justifyright"},{icon:"format_list_numbered",command:"insertorderedlist",active:i.includes("ol")},{icon:"format_list_bulleted",command:"insertunorderedlist",active:i.includes("ul")},{icon:"format_quote",command:"formatblock",command_value:"blockquote"},{icon:"format_indent_decrease",command:"outdent"},{icon:"format_indent_increase",command:"indent"},i.includes("a")?{icon:"link_off",command:"unlink"}:{icon:"add_link",command:()=>{const e=prompt("Write the URL here","http://");e&&""!=e&&"http://"!=e&&r("createlink",e)}},{icon:"format_color_text",command:()=>{const t=e.querySelector("#fg");t.addEventListener("input",(e=>{const t=e.target.value;r("forecolor",t)}),!1),t.click()},type:"color"},{icon:"border_color",command:()=>{const t=e.querySelector("#bg");t.addEventListener("input",(e=>{const t=e.target.value;r("backcolor",t)}),!1),t.click()},type:"color"},{icon:"title",command:"formatblock",values:[{name:"Normal Text",value:"--"},{name:"Heading 1",value:"h1"},{name:"Heading 2",value:"h2"},{name:"Heading 3",value:"h3"},{name:"Heading 4",value:"h4"},{name:"Heading 5",value:"h5"},{name:"Heading 6",value:"h6"},{name:"Paragraph",value:"p"},{name:"Pre-Formatted",value:"pre"}]},{icon:"text_format",command:"fontname",values:[{name:"Font Name",value:"--"},...[...bt()].map((e=>({name:e,value:e,font:!0})))]},{icon:"format_size",command:"fontsize",values:[{name:"Font Size",value:"--"},{name:"Very Small",value:"1"},{name:"Small",value:"2"},{name:"Normal",value:"3"},{name:"Medium Large",value:"4"},{name:"Large",value:"5"},{name:"Very Large",value:"6"},{name:"Maximum",value:"7"}]},{icon:"undo",command:"undo"},{icon:"redo",command:"redo"},{icon:"content_cut",command:"cut"},{icon:"content_copy",command:"copy"},{icon:"content_paste",command:"paste"}];return z`
-    ${s.map((e=>z`
+          ${function(e,t,r){const i=[];if("Range"===(null==t?void 0:t.type)){let e=null==t?void 0:t.baseNode;if(e){const t=()=>{var t,r;const s=null==(r=null==(t=null==e?void 0:e.tagName)?void 0:t.toLowerCase())?void 0:r.trim();s&&i.push(s)};for(;null!=e;)t(),e=null==e?void 0:e.parentNode}}const s=[{icon:"format_clear",command:"removeFormat"},{icon:"format_bold",command:"bold",active:i.includes("b")},{icon:"format_italic",command:"italic",active:i.includes("i")},{icon:"format_underlined",command:"underline",active:i.includes("u")},{icon:"format_align_left",command:"justifyleft"},{icon:"format_align_center",command:"justifycenter"},{icon:"format_align_right",command:"justifyright"},{icon:"format_list_numbered",command:"insertorderedlist",active:i.includes("ol")},{icon:"format_list_bulleted",command:"insertunorderedlist",active:i.includes("ul")},{icon:"format_quote",command:"formatblock",command_value:"blockquote"},{icon:"format_indent_decrease",command:"outdent"},{icon:"format_indent_increase",command:"indent"},i.includes("a")?{icon:"link_off",command:"unlink"}:{icon:"add_link",command:()=>{const e=prompt("Write the URL here","http://");e&&""!=e&&"http://"!=e&&r("createlink",e)}},{icon:"format_color_text",command:()=>{const t=e.querySelector("#fg");t.addEventListener("input",(e=>{const t=e.target.value;r("forecolor",t)})),t.click()},type:"color"},{icon:"border_color",command:()=>{const t=e.querySelector("#bg");t.addEventListener("input",(e=>{const t=e.target.value;r("backcolor",t)})),t.click()},type:"color"},{icon:"title",command:"formatblock",values:[{name:"Normal Text",value:"--"},{name:"Heading 1",value:"h1"},{name:"Heading 2",value:"h2"},{name:"Heading 3",value:"h3"},{name:"Heading 4",value:"h4"},{name:"Heading 5",value:"h5"},{name:"Heading 6",value:"h6"},{name:"Paragraph",value:"p"},{name:"Pre-Formatted",value:"pre"}]},{icon:"text_format",command:"fontname",values:[{name:"Font Name",value:"--"},...[...bt()].map((e=>({name:e,value:e,font:!0})))]},{icon:"format_size",command:"fontsize",values:[{name:"Font Size",value:"--"},{name:"Very Small",value:"1"},{name:"Small",value:"2"},{name:"Normal",value:"3"},{name:"Medium Large",value:"4"},{name:"Large",value:"5"},{name:"Very Large",value:"6"},{name:"Maximum",value:"7"}]},{icon:"undo",command:"undo"},{icon:"redo",command:"redo"},{icon:"content_cut",command:"cut"},{icon:"content_copy",command:"copy"},{icon:"content_paste",command:"paste"}];return z`
+    ${s.map((e=>{const t=document.createElement("mwc-icon-button");return t.setAttribute("icon",e.icon),t.className=e.active?"active":"inactive",t.addEventListener("click",(()=>{e.values||("string"==typeof e.command?r(e.command,e.command_value):e.command())})),z`
         ${e.values?z` <select
               id="${e.icon}"
               @change=${t=>{const i=t.target.value;"--"===i?r("removeFormat",void 0):"string"==typeof e.command&&r(e.command,i)}}
             >
               ${e.values.map((e=>z` <option value=${e.value}>${e.name}</option>`))}
-            </select>`:z` <mwc-icon-button
-              icon="${e.icon}"
-              class="${e.active?"active":"inactive"}"
-              @click=${()=>{e.values||("string"==typeof e.command?r(e.command,e.command_value):e.command())}}
-            ></mwc-icon-button>`}
-      `))}
+            </select>`:z` ${t}`}
+      `}))}
   `}(this.shadowRoot,this.getSelection(),((e,t)=>{document.execCommand(e,!1,t),console.log("command",e,t)}))}
         </div>
       </div>
@@ -628,6 +624,7 @@ limitations under the License.
       color: var(--editor-toolbar-on-background);
       --mdc-icon-size: 20px;
       --mdc-icon-button-size: 30px;
+      cursor: pointer;
     }
     #toolbar > .active {
       color: var(--editor-toolbar-on-active-background);
