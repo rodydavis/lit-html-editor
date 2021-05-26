@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+      rel="stylesheet"
+    />
+    <title>Lit HTML Editor</title>
+    <script type="module" src="/src/rich-text-editor.ts"></script>
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
+      rich-text-editor {
+        --editor-width: 100%;
+        --editor-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <rich-text-editor>
+      <template>
+        <h1>Headline 1</h1>
+        <p>This is a paragraph.</p>
+        <p>
+          <span style="background-color: rgb(255, 0, 0)"
+            ><font color="#ffffff">Styled Text</font></span
+          >
+        </p>
+      </template>
+    </rich-text-editor>
+  </body>
+</html>
