@@ -57,6 +57,7 @@ export class RichTextEditor extends LitElement {
       color: var(--editor-toolbar-on-background);
       --mdc-icon-size: 20px;
       --mdc-icon-button-size: 30px;
+      cursor: pointer;
     }
     #toolbar > .active {
       color: var(--editor-toolbar-on-active-background);
@@ -81,8 +82,8 @@ export class RichTextEditor extends LitElement {
 
   render() {
     return html`<main>
-      <input id="bg" type="color" hidden />
-      <input id="fg" type="color" hidden />
+      <input id="bg" type="color" style='display:none' />
+      <input id="fg" type="color" style='display:none' />
       <div id="editor-actions">
         <div id="toolbar">
           ${toolbar(this.shadowRoot!, this.getSelection(), (command, val) => {
@@ -218,14 +219,10 @@ function toolbar(
       icon: "format_color_text",
       command: () => {
         const input = shadowRoot.querySelector("#fg")! as HTMLInputElement;
-        input.addEventListener(
-          "input",
-          (e: any) => {
-            const val = e.target.value;
-            command("forecolor", val);
-          },
-          false
-        );
+        input.addEventListener("input", (e: any) => {
+          const val = e.target.value;
+          command("forecolor", val);
+        });
         input.click();
       },
       type: "color",
@@ -234,14 +231,10 @@ function toolbar(
       icon: "border_color",
       command: () => {
         const input = shadowRoot.querySelector("#bg")! as HTMLInputElement;
-        input.addEventListener(
-          "input",
-          (e: any) => {
-            const val = e.target.value;
-            command("backcolor", val);
-          },
-          false
-        );
+        input.addEventListener("input", (e: any) => {
+          const val = e.target.value;
+          command("backcolor", val);
+        });
         input.click();
       },
       type: "color",
@@ -311,6 +304,17 @@ function toolbar(
 
   return html`
     ${commands.map((n) => {
+      const elem = document.createElement("mwc-icon-button");
+      elem.setAttribute("icon", n.icon);
+      elem.className = n.active ? "active" : "inactive";
+      elem.addEventListener("click", () => {
+        if (n.values) {
+        } else if (typeof n.command === "string") {
+          command(n.command, n.command_value);
+        } else {
+          n.command();
+        }
+      });
       return html`
         ${n.values
           ? html` <select
@@ -328,18 +332,7 @@ function toolbar(
                 (v) => html` <option value=${v.value}>${v.name}</option>`
               )}
             </select>`
-          : html` <mwc-icon-button
-              icon="${n.icon}"
-              class="${n.active ? "active" : "inactive"}"
-              @click=${() => {
-                if (n.values) {
-                } else if (typeof n.command === "string") {
-                  command(n.command, n.command_value);
-                } else {
-                  n.command();
-                }
-              }}
-            ></mwc-icon-button>`}
+          : html` ${elem}`}
       `;
     })}
   `;
