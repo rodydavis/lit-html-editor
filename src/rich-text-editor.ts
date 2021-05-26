@@ -106,18 +106,18 @@ export class RichTextEditor extends LitElement {
     this.root = root;
   }
 
-  getSelection(): Selection {
-    const selection: Selection = this.shadowRoot!.getSelection()!;
-    return selection;
+  getSelection(): Selection | null {
+    if (this.shadowRoot?.getSelection) return this.shadowRoot?.getSelection();
+    return null;
   }
 }
 
 function toolbar(
-  selection: Selection,
+  selection: Selection | null,
   command: (c: string, val: string | undefined) => void
 ) {
   const tags: string[] = [];
-  if (selection.type === "Range") {
+  if (selection?.type === "Range") {
     // @ts-ignore
     let parentNode = selection?.baseNode;
     if (parentNode) {
@@ -131,8 +131,6 @@ function toolbar(
       }
     }
   }
-
-  console.log("tags", tags);
 
   const commands: {
     icon: string;
