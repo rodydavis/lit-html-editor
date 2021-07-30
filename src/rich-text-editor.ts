@@ -1,16 +1,23 @@
-import { LitElement, html, customElement, css, state } from "lit-element";
+import {
+  LitElement,
+  html,
+  customElement,
+  css,
+  state,
+  property,
+} from "lit-element";
 
 import "@material/mwc-icon-button";
 
 @customElement("rich-text-editor")
 export class RichTextEditor extends LitElement {
-  @state() content: string = "";
+  @property() content: string =  this.children[0]?.innerHTML.trim();
   @state() root: Element | null = null;
 
   static styles = css`
     :host {
-      --editor-width: 600px;
-      --editor-height: 600px;
+      --editor-width: 100%;
+      --editor-height: 100vh;
       --editor-background: #f1f1f1;
       --editor-toolbar-height: 33px;
       --editor-toolbar-background: black;
@@ -97,8 +104,23 @@ export class RichTextEditor extends LitElement {
   }
 
   async firstUpdated() {
-    const elem = this.parentElement!.querySelector("rich-text-editor template");
-    this.content = elem?.innerHTML ?? "";
+    this.reset();
+    window.addEventListener(
+      "resize",
+      () => {
+        this.requestUpdate();
+      },
+      false
+    );
+  }
+
+  getValue() {
+    const elem = this.root!;
+    return elem.innerHTML;
+  }
+
+  setValue(value: string) {
+    this.content = value;
     this.reset();
   }
 
