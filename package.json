@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@material/mwc-icon-button": "^0.21.0",
-    "lit-element": "^2.4.0"
+    "lit": "*"
   },
   "devDependencies": {
     "typescript": "^4.1.3",

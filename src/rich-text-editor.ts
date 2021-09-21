@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  state,
-  property,
-} from "lit-element";
+import { html, css, LitElement } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 
 import "@material/mwc-icon-button";
 
