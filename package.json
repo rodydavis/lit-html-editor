@@ -7,6 +7,7 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
+    "@material/mwc-icon": "^0.25.3",
     "@material/mwc-icon-button": "^0.21.0",
     "lit": "*"
   },

@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "lib": ["es2017", "dom", "dom.iterable"],
+    "lib": [
+      "es2017",
+      "dom",
+      "dom.iterable"
+    ],
     "declaration": true,
-    "emitDeclarationOnly": true,
     "outDir": "./types",
     "rootDir": "./src",
     "strict": true,
@@ -16,6 +19,8 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": []
 }
