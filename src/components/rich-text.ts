@@ -16,8 +16,8 @@ export class RichText extends LitElement {
       --rich-padding: 8px;
     }
     main {
-      width: 100%;
       height: 100%;
+      width: 100%;
       display: grid;
       grid-template-rows: 1fr auto;
       grid-template-columns: 1fr;
@@ -44,7 +44,7 @@ export class RichText extends LitElement {
       color: var(--rich-color);
     }
 
-    @media (hover: hover) and (pointer: fine) {
+    /* @media (hover: hover) and (pointer: fine) {
       main {
         grid-template-rows: auto 1fr;
         grid-template-areas:
@@ -55,6 +55,16 @@ export class RichText extends LitElement {
         border-top: none;
         border-bottom: 1px solid var(--rich-color);
       }
+    } */
+    main {
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "toolbar"
+        "viewer";
+    }
+    rich-toolbar {
+      border-top: none;
+      border-bottom: 1px solid var(--rich-color);
     }
 
     @media (prefers-color-scheme: dark) {
