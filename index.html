@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
       rel="stylesheet"
@@ -15,13 +18,14 @@
         width: 100%;
         height: 100vh;
         padding: 0;
+        display: flex;
+        flex-direction: column;
         margin: 0;
-        position: fixed;
-        overflow: hidden;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
       }
       rich-text {
-        width: 100%;
-        height: 100vh;
+        flex: 1;
       }
     </style>
   </head>
