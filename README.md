@@ -1,3 +1,9 @@
+> [!IMPORTANT]
+> This repository has been archived and consolidated into the **[lit-examples](https://github.com/rodydavis/lit-examples)** monorepo.
+> Future development, updates, and issues will be managed there. Please visit the monorepo for the latest version of this project.
+
+***
+
 # Lit Html Editor
 
 Rich text editor built with [Lit](https://lit.dev) based on [this](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Editable_content#example_a_simple_but_complete_rich_text_editor) example.
